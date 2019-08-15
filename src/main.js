@@ -51,7 +51,8 @@ Vue.locale('en-US', mergeEN);
 
 // 路由配置
 const RouterConfig = {
-    routes: Routers
+    routes: Routers,
+    base: 'iview-doc'
 };
 if (Env != 'local') {
     RouterConfig.mode = 'history';
