@@ -6,23 +6,25 @@ var webpack = require('webpack');
 var config = require('./webpack.base.config');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 var fs = require('fs');
 
-config.output.publicPath = 'https://file.iviewui.com/dist/';
+// config.output.publicPath = 'https://file.iviewui.com/dist/';
 // config.output.publicPath = '/dist/';
-config.output.filename = '[name].[hash].js';                 // 带hash值的入口js名称
-config.output.chunkFilename = '[name].[hash].chunk.js';      // 带hash值的路由js名称
+config.output.filename = 'static/js/[name].[hash].js';                 // 带hash值的入口js名称
+config.output.chunkFilename = 'static/js/[name].[hash].chunk.js';      // 带hash值的路由js名称
 
 
 config.plugins = (config.plugins || []).concat([
+    new CleanWebpackPlugin(),
     new ExtractTextPlugin({
-        filename: '[name].[hash].css',
+        filename: 'static/css/[name].[hash].css',
         disable: false,
         allChunks: true
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendors',
-        filename: 'vendors.[hash].js'
+        filename: 'static/js/vendors.[hash].js'
     }),
     new webpack.DefinePlugin({
         'process.env': {
@@ -35,9 +37,9 @@ config.plugins = (config.plugins || []).concat([
         }
     }),
     new HtmlWebpackPlugin({
-        filename: '../index_prod.html',
-        template: './src/template/index.ejs',
-        inject: false
+        filename: 'index.html',
+        template: 'index.html',
+        inject: true
     })
 ]);
 
