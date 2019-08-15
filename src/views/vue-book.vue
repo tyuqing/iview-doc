@@ -64,9 +64,6 @@
     </div>
 </template>
 <script>
-    import axios from 'axios';
-    const apiPath = 'https://www.iviewui.com';
-//    const apiPath = 'http://127.0.0.1:9800';
 
     export default {
         props: {},
@@ -134,19 +131,6 @@
                         params.append('phone', this.formItem.phone);
                         params.append('address', this.formItem.address);
 
-                        axios({
-                            method: 'post',
-                            url: `${apiPath}/order/buy`,
-                            data: params,
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                            }
-                        }).then(res => {
-                            if (res.data.status_code === '0') {
-                                this.order_id = res.data.data.order.id;
-                                this.steps = 1;
-                            }
-                        });
                     },
                     onCancel: () => {
 

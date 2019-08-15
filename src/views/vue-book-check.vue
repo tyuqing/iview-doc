@@ -39,9 +39,6 @@
     </div>
 </template>
 <script>
-    import axios from 'axios';
-    const apiPath = 'https://www.iviewui.com';
-//    const apiPath = 'http://127.0.0.1:9800';
 
     export default {
         props: {},
@@ -62,26 +59,6 @@
                     const params = new URLSearchParams();
                     params.append('id', this.id);
 
-                    axios({
-                        method: 'post',
-                        url: `${apiPath}/order/id`,
-                        data: params,
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                        }
-                    }).then(res => {
-                        if (res.data.status_code === '0') {
-                            const order = res.data.data.order;
-                            if (order === '') {
-                                this.$Notice.error({
-                                    title: '订单号有误',
-                                    desc: '订单号（或手机号）' + this.id + '没有查询到信息'
-                                });
-                            } else {
-                                this.order = res.data.data.order;
-                            }
-                        }
-                    });
                 }
             },
             handleSetCheck (type) {
@@ -89,25 +66,6 @@
                 params.append('id', this.order.id);
                 params.append('check', type);
 
-                axios({
-                    method: 'post',
-                    url: `${apiPath}/order/setcheck`,
-                    data: params,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                    }
-                }).then(res => {
-                    if (res.data.status_code === '0') {
-                        this.$Notice.success({
-                            title: '订单信息确认成功'
-                        });
-                        if (type === 2) {
-                            this.isCheck = '信息确认完成';
-                        } else if (type === 3) {
-                            this.isCheck = '信息确认完成，您标记为有误，请协助管理员微信 TalkingCoder 修改';
-                        }
-                    }
-                });
             }
         },
         mounted () {

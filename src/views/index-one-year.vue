@@ -80,9 +80,6 @@
 </template>
 <script>
     import bus from '../../src/components/bus';
-    import axios from 'axios';
-    const apiPath = 'https://www.iviewui.com';
-//    const apiPath = 'http://127.0.0.1:9800';
 
     function colorRGB2Hex(color) {
         var rgb = color.split(',');
@@ -133,22 +130,6 @@
             sendBarrage (text) {
                 const params = new URLSearchParams();
                 params.append('text', text);
-                axios({
-                    method: 'post',
-                    url: `${apiPath}/barrage/add`,
-                    data: params,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                    }
-                }).then(res => {
-                    if (res.data.status_code === '0') {
-                        this.myIds.push(res.data.data.barrage.id);
-                        this.counter = 5;
-                        this.barrage = '';
-                        this.sendOneBarrage(text);
-                        this.goCounter();
-                    }
-                })
             },
             goCounter () {
                 if (this.counter === 0) {
@@ -170,36 +151,6 @@
                     params.append('starttime', this.endtime - 5000);
                     params.append('endtime', this.endtime);
                 }
-                axios({
-                    method: 'post',
-                    url: `${apiPath}/barrage/list`,
-                    data: params,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                    }
-                }).then(res => {
-                    if (res.data.status_code === '0') {
-                        if (init) {
-                            this.endtime = parseInt(res.data.data.time);
-                        } else {
-                            this.endtime += 5000;
-                            const list = res.data.data.barrages;
-                            if (list.length) {
-                                const time = parseInt(5000 / list.length);
-                                list.forEach(item => {
-                                    if (this.myIds.indexOf(item.id) > -1) {
-
-                                    } else {
-                                        this.sendOneBarrage(item.text);
-                                    }
-                                });
-                            }
-                        }
-                        this.getTimer = setTimeout(() => {
-                            this.getBarrage();
-                        }, 5000);
-                    }
-                })
             },
             sendOneBarrage (text) {
                 const rgb = Math.floor(Math.random () * 255) + ',' + Math.floor(Math.random () * 255) + ',' + Math.floor(Math.random () * 255);
