@@ -125,7 +125,7 @@
                 });
             },
             handleAd () {
-                _hmt.push(['_trackEvent', 'vue-juejin', 'click']);
+                // _hmt.push(['_trackEvent', 'vue-juejin', 'click']);
 //                this.$router.push('/live');
 //                this.showAd = true;
                 window.open('https://juejin.im/welcome/frontend?utm_source=iview&utm_medium=banner&utm_content=huoyue&utm_campaign=q4_website');
